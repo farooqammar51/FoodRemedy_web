@@ -1,0 +1,63 @@
+<form [formGroup]="registerUser">
+  <div *ngIf="isUpdateData" class="d-flex justify-content-between align-items-start">
+    <h2 mat-dialog-title>Update User</h2>
+    <button type="button" mat-icon-button [mat-dialog-close]="true" class="align-self-start">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="!isUpdateData" class="d-flex justify-content-between align-items-start">
+    <h2 mat-dialog-title>Add User</h2>
+    <button type="button" mat-icon-button [mat-dialog-close]="true" class="align-self-start">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div> 
+
+  <span class="d-flex justify-content-center" [ngClass]="isAccountCreated ? 'text-success' : 'text-danger'">
+    {{ displayMessage }}
+  </span>
+
+  <mat-dialog-content class="mat-typography">
+    <div formGroupName="userDetails">
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Food Remedy" [(ngModel)]="username"
+          type="text" name="username" id="username"
+            formControlName="username">
+          <mat-icon matPrefix>account_circle</mat-icon>
+        </mat-form-field>
+        <span *ngIf="!registerUser.get('userDetails.username')?.valid && 
+        registerUser.get('userDetails.username')?.touched">
+          <p class="text-danger text-start">Invalid username</p>
+        </span>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="****" [(ngModel)]="password"
+          [type]="showPassword ? 'text' : 'password'" name="password" id="password"
+            formControlName="password">
+          <mat-icon matPrefix>vpn_key</mat-icon>
+          <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <span *ngIf="!registerUser.get('userDetails.password')?.valid && 
+        registerUser.get('userDetails.password')?.touched">
+          <p class="text-danger text-start">Please enter your password!</p>
+        </span>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button color="basic" mat-dialog-close>Cancel</button>
+    <div *ngIf="isUpdateData">
+      <button type="submit" mat-button color="warn" cdkFocusInitial (click)="onSubmit(1)">Update</button>
+    </div>
+    <div *ngIf="!isUpdateData">
+      <button type="submit" mat-button color="warn" cdkFocusInitial (click)="onSubmit(0)">Submit</button>
+    </div>
+  </mat-dialog-actions>
+</form>

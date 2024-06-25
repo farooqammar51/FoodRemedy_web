@@ -1,0 +1,23 @@
+mat-card {
+  margin: 2%;
+}
+
+th {
+  background-color: #3375c6 !important;
+  color: #ffffff;
+}
+
+button {
+  margin: 2px;
+}
+button {
+  margin: 2px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: #3375c6;
+}

@@ -1,0 +1,30 @@
+mat-card {
+    margin: 2%;
+  }
+  
+  th {
+    background-color: #3375c6 !important;
+    color: #ffffff;
+  }
+  
+  button {
+    margin: 2px;
+  }
+
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+  }
+
+  .details {
+    cursor: pointer !important;
+    
+  }
+
+  .details:hover {
+    color: blue;
+    
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: #3375c6;
+  }

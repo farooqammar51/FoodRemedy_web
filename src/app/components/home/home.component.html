@@ -1,0 +1,95 @@
+<mat-toolbar>
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span><a [routerLink]="['/home']">Food Remedy</a></span>
+  <span class="example-spacer"></span>
+  <span>{{ username }}</span>
+  <div class="d-flex align-items-center">
+    <button mat-icon-button>
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #accountMenu="">
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="true" mode="side" position="start">
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/home']" 
+      routerLinkActive="active" 
+      [routerLinkActiveOptions]="{ exact: false }">
+          <mat-icon class="align-icon">home</mat-icon> Home
+      </mat-list-item>
+      <mat-list-item [routerLink]="['user']" 
+      [queryParams]="{ take: take, skip: skip }" 
+      routerLinkActive="active" 
+      (click)="onClickUserComponent()">
+        <mat-icon class="align-icon">people</mat-icon> User Management
+      </mat-list-item>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header style="padding-left: 0;">
+            <mat-list-item>
+              <mat-icon class="align-icon">receipt</mat-icon> Ingredient Management
+            </mat-list-item>
+          </mat-expansion-panel-header>
+        
+          <ng-template matExpansionPanelContent>
+            <mat-list-item [routerLink]="['database']" routerLinkActive="active">
+              <mat-icon class="align-icon">storage</mat-icon> Database Management
+            </mat-list-item>
+            <mat-list-item [routerLink]="['category']" routerLinkActive="active">
+              <mat-icon class="align-icon">folder</mat-icon> Category Management
+            </mat-list-item>
+            <mat-list-item [routerLink]="['tag']" routerLinkActive="active">
+              <mat-icon class="align-icon">label</mat-icon> Tag Management
+            </mat-list-item>
+          </ng-template>
+        </mat-expansion-panel>
+      <mat-list-item>
+          <mat-icon class="align-icon">analytics</mat-icon> Analytics
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="margin-left: 2px; min-height: 600px; overflow-x: hidden;">
+      <div *ngIf="shouldRenderHomeContent()">
+        <div class="container mt-4">
+          <div class="row">
+              <div class="col-md-12">
+                  <h2>About Us</h2>
+                  <p>
+                      Food Remedy Co enables whole food communities and
+                      businesses to digitize and communicate whole food benefits.
+                  </p>
+              </div>
+      
+              <div class="col-md-12">
+                  <h2>Our Mission</h2>
+                  <p>
+                      We aim to revolutionize the way people think
+                      about and consume food, demystifying nutrition and showcasing health benefits.
+                  </p>
+              </div>
+      
+              <div class="col-md-12">
+                  <h2>Experience</h2>
+                  <p>
+                      With two decades of experience,
+                      Food Remedy Co supports individuals to increase their whole food consumption.
+                  </p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <router-outlet *ngIf="!shouldRenderHomeContent()"></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

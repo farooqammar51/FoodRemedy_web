@@ -1,0 +1,139 @@
+<div class="container p-2">
+  <div *ngIf="isEdit">
+    <h2>Edit ingredient</h2>
+    <p>Description: {{ ingredientDescription }}</p>
+    <div *ngIf="tagList">
+      <div *ngFor="let category of Object.keys(tagList)">
+        <div class="row">
+          <h3>
+            Category: <b>{{ category }}</b>
+          </h3>
+          <p><b>Tags:</b></p>
+          <div *ngFor="let tag of tagList[category]">
+            <ul class="list-group">
+              <li class="list-group-item">
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isEdit">
+    <div class="form-container">
+      <form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <label class="form-label" style="font-size: larger"
+            >Description</label
+          >
+          <mat-form-field appearance="fill" class="col-md-6">
+            <input
+              matInput
+              placeholder="Ingredient description"
+              type="text"
+              name="description"
+              id="description"
+              formControlName="description"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row p-3">
+          <div class="col-md-12" formArrayName="tags">
+            <div class="row">
+              <div class="col-md-12">
+                <button
+                  mat-raised-button
+                  color="warn"
+                  aria-label="deleteTagForm"
+                  type="button"
+                  (click)="onAddTag()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Add Tag
+                </button>
+              </div>
+            </div>
+            <br />
+            <div
+              class="row"
+              *ngFor="let ingredientCtrl of controls; let i = index"
+              [formGroupName]="i"
+            >
+              <mat-form-field class="col-md-2">
+                <mat-label>Select Category</mat-label>
+                <mat-select formControlName="category" id="categoryName">
+                  @for (category of categories; track category) {
+                  <mat-option
+                    [value]="category"
+                    (click)="onCategorySelect(i, category)"
+                    >{{ category }}</mat-option
+                  >
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-8 example-chip-list">
+                <mat-label>Select Tags</mat-label>
+                <mat-chip-grid
+                  #chipGrid
+                  aria-label="Tag selection"
+                  formControlName="ingTags"
+                >
+                  @for (tag of selectedList[i]; track tag) {
+                  <mat-chip-row
+                    (removed)="removeTag(i, tag)"
+                    [editable]="false"
+                    (edited)="edit(i, tag, $event)"
+                    [aria-description]="'press enter to edit ' + tag"
+                  >
+                    {{ tag }}
+                    <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                  }
+                </mat-chip-grid>
+                <input
+                  placeholder="New tag..."
+                  #tagInput
+                  id="ingTags"
+                  formControlName="ingTags"
+                  [matChipInputFor]="chipGrid"
+                  [matAutocomplete]="auto"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addTag(i, $event)"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="selected(i, $event)"
+                >
+                  @for (tag of tagListsByIndex[i]; track tag) {
+                  <mat-option [value]="tag">{{ tag }}</mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+              <div class="col-md-2">
+                <button
+                  mat-mini-fab
+                  color="warn"
+                  aria-label="deleteTagForm"
+                  type="button"
+                  (click)="onDeleteTag(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <mat-divider></mat-divider><br />
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" mat-raised-button color="warn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

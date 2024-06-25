@@ -1,0 +1,15 @@
+<div *ngIf="dialogBox">
+  <div class="backdrop" (click)="onClose()">
+</div>
+  <div class="alert-box" (click)="onClose()">
+    <div class="d-flex justify-content-between align-items-start">
+      <h2 mat-dialog-title>Idle alert</h2>
+      <button type="button" mat-icon-button class="align-self-start" (click)="onClose()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+    <p>{{idleStatus}}</p><br>
+    <!-- <p>{{isTimedOut}}</p><br> -->
+    <p>{{timeOutCounter}}</p><br>
+  </div>
+</div>

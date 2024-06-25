@@ -1,0 +1,31 @@
+@import '~node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html {
+  --mdc-filled-text-field-focus-active-indicator-color: #000000;
+  --mdc-circular-progress-active-indicator-color: #3375c6;
+}
+
+.mat-mdc-raised-button.mat-warn {
+  --mdc-protected-button-container-color: #3375c6;
+  --mdc-protected-button-label-text-color: #ffffff;
+}
+
+.mat-mdc-button.mat-warn {
+  --mdc-text-button-label-text-color: #3375c6;
+  --mat-text-button-state-layer-color: #3375c6;
+  --mat-text-button-ripple-color: rgba(244, 67, 54, 0.1);
+}
+
+mat-label {
+  color: #241f20;
+}

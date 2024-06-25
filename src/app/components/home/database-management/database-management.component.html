@@ -1,0 +1,157 @@
+<div class="row">
+  <div class="col-md-4 p-3">
+    <button
+      *ngIf="!editClicked"
+      mat-raised-button
+      color="warn"
+      (click)="onAddUpdateIngredient(0)"
+    >
+      <mat-icon>add</mat-icon> Add Ingredient
+    </button>
+    <span *ngIf="isItemSelected && !editClicked">
+      <button mat-raised-button color="warn" (click)="onAddUpdateIngredient(1)">
+        <mat-icon>edit</mat-icon> Edit Ingredient
+      </button>
+    </span>
+    <button
+      *ngIf="editClicked"
+      mat-raised-button
+      color="warn"
+      (click)="GoBack()"
+    >
+      <mat-icon>arrow_back</mat-icon> Back
+    </button>
+  </div>
+  <mat-divider></mat-divider><br />
+</div>
+<div class="row">
+  <div *ngIf="!editClicked">
+    <mat-card>
+      <mat-card-header>
+        <mat-form-field>
+          <input
+            matInput
+            (keyup)="filterchange($event)"
+            placeholder="Type to search..."
+          />
+        </mat-form-field>
+      </mat-card-header>
+
+      <mat-card-content *ngIf="dataSource != undefined; else elseBlock">
+        <table matSort mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="index">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>S.No</th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              matTooltip="Click to edit ingredient"
+              matTooltipPosition="above"
+              (click)="onClickIngredient(element.id)"
+            >
+              {{ element.index }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>
+              Description
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              matTooltip="Click to edit ingredient"
+              matTooltipPosition="above"
+              (click)="onClickIngredient(element.id)"
+            >
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="details">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Details</th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              class="details"
+              (click)="onClickDetails(element.id)"
+            >
+              Toggle details
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+
+      <ng-template #elseBlock>
+        <p class="text-center">-- No record found --</p>
+      </ng-template>
+
+      <mat-divider></mat-divider>
+      <mat-card-footer>
+        <mat-paginator
+          [pageSizeOptions]="[10, 20, 30, 40, 50]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  <router-outlet *ngIf="editClicked"></router-outlet>
+</div>
+
+<div
+  class="modal fade"
+  id="ingredientTagsModal"
+  tabindex="-1"
+  aria-labelledby="ingredientTagsModalLabel"
+  aria-hidden="true"
+  #ingredientTagsModal
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="ingredientTagsModal">
+          Ingredient Categories and tags
+        </h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="tagList; else elseblock">
+          <div *ngFor="let category of Object.keys(tagList)">
+            <div class="row">
+              <h3>
+                Category: <b>{{ category }}</b>
+              </h3>
+              <p><b>Tags:</b></p>
+              <div *ngFor="let tag of tagList[category]">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    {{ tag }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #elseblock>
+          <p>--No record found--</p>
+        </ng-template>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

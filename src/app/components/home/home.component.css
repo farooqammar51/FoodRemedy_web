@@ -1,0 +1,23 @@
+mat-toolbar {
+  background-color: #3375c6;
+  color: #ffffff;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+body {
+  background-color: #3375c6;
+  color: #ffffff;
+}
+
+.align-icon {
+  vertical-align: middle;
+}
